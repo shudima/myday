@@ -1,0 +1,44 @@
+[ 
+	{ 
+		"name" : "horoscope.com",
+		"scrapper_module" : "",
+		"scrapper_class" : "",							
+		"urls" : [ 
+					{
+  						"url_type" : "daily" ,
+  						"url" : "http://my.horoscope.com/astrology/free-daily-horoscope-{0}.html",
+  						"xpath" : "//div[@id=\"textline\"]",
+  						"regex" : ""
+  					}
+  		   		 ],
+		"luanguage" : "en-us"
+	},
+		{ 
+		"name" : "yahoo.com",
+		"scrapper_module" : "",
+		"scrapper_class" : "",
+		"urls" : [
+					{
+						"url_type" : "daily" ,
+  						"base_url" : "https://celebrity.yahoo.com/horoscope/{0}/",
+  						"xpath" : "",
+  						"regex" : ""
+  					}					  					
+  		   		 ],
+		"language" : "en-us"						},
+		{ 
+		"name" : "elle.com",
+		"scrapper_module" : "",
+		"scrapper_class" : "",							
+		"urls" : [
+					{ 
+  						"url_type" : "base" ,
+  						"base_url" : "http://www.elle.com/horoscopes/daily/",
+  						"xpath" : "",
+  						"regex" : ""
+  					},					  										  					
+  		   		 ],
+		"language" : "en-us"
+	}						
+]
+

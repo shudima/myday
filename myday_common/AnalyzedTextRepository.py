@@ -5,7 +5,7 @@ MONGO_HOST = 'mongodb://admin:admin@ds031691.mongolab.com:31691/shudima'
 class AnalyzedTextRepository:
 	def SaveAnalyzedText(self, analyzedText, date, sign, source, url):
 
-		text_object = self.CreateTextObjet(analyzedText, date, sign, source, url)
+		text_object = self.CreateTextObjet(analyzedText, date, sign, source, url, type)
 
 		client = MongoClient(MONGO_HOST)
 		
