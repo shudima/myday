@@ -6,7 +6,7 @@
 		"urls" : [ 
 					{
   						"url_type" : "daily" ,
-  						"url" : "http://my.horoscope.com/astrology/free-daily-horoscope-{0}.html",
+  						"url" : "http://my.horoscope.com/astrology/free-daily-horoscope-%s.html",
   						"xpath" : "//div[@id=\"textline\"]",
   						"regex" : ""
   					}
@@ -20,25 +20,11 @@
 		"urls" : [
 					{
 						"url_type" : "daily" ,
-  						"base_url" : "https://celebrity.yahoo.com/horoscope/{0}/",
-  						"xpath" : "",
+  						"url" : "https://celebrity.yahoo.com/horoscope/%s/",
+  						"xpath" : "//div[@class=\"body\"]",
   						"regex" : ""
   					}					  					
   		   		 ],
-		"language" : "en-us"						},
-		{ 
-		"name" : "elle.com",
-		"scrapper_module" : "",
-		"scrapper_class" : "",							
-		"urls" : [
-					{ 
-  						"url_type" : "base" ,
-  						"base_url" : "http://www.elle.com/horoscopes/daily/",
-  						"xpath" : "",
-  						"regex" : ""
-  					},					  										  					
-  		   		 ],
-		"language" : "en-us"
-	}						
+		"language" : "en-us"						}					
 ]
 

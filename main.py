@@ -1,34 +1,69 @@
-#from myday_common.TextHandler import TextHandler
-#from myday_common.TextScrapper import TextScrapper
-#from myday_common.AnalyzedText import AnalyzedText
-#from myday_common.AnalyzedTextRepository import AnalyzedTextRepository
-#from myday_common.TextAnalyzer import TextAnalyzer
+from myday_common.TextHandler import TextHandler
+from myday_common.TextScrapper import TextScrapper
+from myday_common.AnalyzedText import AnalyzedText
+from myday_common.AnalyzedTextRepository import AnalyzedTextRepository
+from myday_common.TextAnalyzer import TextAnalyzer
 import json
-from myday_common import *
-
+import os
+import sys
+from threading import Thread
 from datetime import datetime
 
 
-scrapper = TextScrapper()
-analyzer = TextAnalyzer()
-repository = AnalyzedTextRepository()
+def GetSources():
+	script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+	rel_path = 'myday_config/sources.json'
+	abs_file_path = os.path.join(script_dir, rel_path)
+	with open(abs_file_path) as data_file:    
+		data = json.load(data_file)
+    	return data
 
-source = "horoscope.com"
-url = 'http://my.horoscope.com/astrology/free-daily-horoscope-aries.html'
-xpath = '//div[@id="textline"]'
-
-#text = scrapper.GetText(url, xpath)
-
-#analyzedText = analyzer.GetAnalyzedTextFromText(text)
-
-#repository.SaveAnalyzedText(analyzedText, datetime.now(), 'libra', source, url)
-
-
-
-#data = []
-with open('config.json') as f:
-    for line in f:
-        data = json.loads(line)
+def GetSigns():
+	script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+	rel_path = 'myday_config/signs.json'
+	abs_file_path = os.path.join(script_dir, rel_path)
+	with open(abs_file_path) as data_file:    
+		data = json.load(data_file)
+    	return data
 
 
+def ScrapAndSave(url, xpath, sign, source):
+	print('saving ' + url + '\n')
+	try:
+		scrapper = TextScrapper()
+		analyzer = TextAnalyzer()
+		repository = AnalyzedTextRepository()
+
+		text = scrapper.GetText(url, xpath) 
+		analyzedText = analyzer.GetAnalyzedTextFromText(text) 
+		repository.SaveAnalyzedText(analyzedText, datetime.now(), sign, source, url)	
+	except Exception as e:
+		print("Unexpected error saving " + url + " error:" + str(e) + '\n')
+		pass
+
+
+def Main():
+	sources = GetSources()
+	signs = GetSigns()
+
+	threads = []
+
+	for source in sources:
+		for url in source['urls']:
+			for sign in signs.values():
+
+				the_url = url['url'] %sign
+				xpath = url['xpath']
+				the_source = source['name']
+				t = Thread(target=ScrapAndSave, args=(the_url,xpath,sign,the_source,)) 
+				t.start()
+				threads.append(t)
+
+	for t in threads:
+		t.join()
+
+
+
+
+Main()
 print('OK')

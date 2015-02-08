@@ -5,7 +5,7 @@ MONGO_HOST = 'mongodb://admin:admin@ds031691.mongolab.com:31691/shudima'
 class AnalyzedTextRepository:
 	def SaveAnalyzedText(self, analyzedText, date, sign, source, url):
 
-		text_object = self.CreateTextObjet(analyzedText, date, sign, source, url, type)
+		text_object = self.CreateTextObjet(analyzedText, date, sign, source, url)
 
 		client = MongoClient(MONGO_HOST)
 		
@@ -13,6 +13,8 @@ class AnalyzedTextRepository:
 
 		texts = db.analyzed_texts
 
+
+		db.analyzed_texts.remove( { "sign" : sign, "source" : source } )
 		texts.insert(text_object)
 
 
