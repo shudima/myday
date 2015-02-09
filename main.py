@@ -28,7 +28,6 @@ def GetSigns():
 
 
 def ScrapAndSave(url, xpath, sign, source):
-	print('saving ' + url + '\n')
 	try:
 		scrapper = TextScrapper()
 		analyzer = TextAnalyzer()
@@ -48,6 +47,7 @@ def Main():
 
 	threads = []
 
+	# For each source, url and sign, start scrapping thread
 	for source in sources:
 		for url in source['urls']:
 			for sign in signs.values():
@@ -59,8 +59,12 @@ def Main():
 				t.start()
 				threads.append(t)
 
+	# Wait for threads to finish
+	i =0
 	for t in threads:
 		t.join()
+		i = i + 1
+		print('Done %d out of %d' % (i, len(threads)))
 
 
 
