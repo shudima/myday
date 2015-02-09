@@ -1,11 +1,15 @@
-var  http = require('http')
+var express = require('express');
+var mongoose = require('mongoose');
+var app = express();
 
-var server = http.createServer(function (request, response) { 
+mongoose.connect('mongodb://admin:admin@ds031691.mongolab.com:31691/shudima');
 
-	response.writeHead(200);
-	response.end("Dima2");
+mongoose.model('analyzed_texts', { sign : String, sentiment: String})
+app.get('/daily/:sign', function(req, res) { 
 
+	mongoose.model('analyzed_texts').find({sign : req.params.sign },function(err, analysis) {
+		res.send(analysis);
+	});
 });
 
-
-server.listen(7000);
+app.listen(7000);
