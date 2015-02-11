@@ -13,7 +13,7 @@
   		   		 ],
 		"luanguage" : "en-us"
 	},
-		{ 
+	{ 
 		"name" : "yahoo.com",
 		"scrapper_module" : "",
 		"scrapper_class" : "",
@@ -21,10 +21,25 @@
 					{
 						"url_type" : "daily" ,
   						"url" : "https://celebrity.yahoo.com/horoscope/%s/",
-  						"xpath" : "//div[@class=\"body\"]",
+  						"xpath" : "(//div[@class=\"body\"])[1]/span",
   						"regex" : ""
   					}					  					
   		   		 ],
-		"language" : "en-us"						}					
+		"language" : "en-us"						
+	},
+	{ 
+		"name" : "Tarot.com",
+		"scrapper_module" : "",
+		"scrapper_class" : "",
+		"urls" : [
+					{
+						"url_type" : "daily" ,
+  						"url" : "http://www.tarot.com/daily-horoscope/%s",
+  						"xpath" : "//p[@class=\"js-today_interp_copy\"]",
+  						"regex" : ""
+  					}					  					
+  		   		 ],
+		"language" : "en-us"						
+	}				
 ]
 

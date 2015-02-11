@@ -33,9 +33,15 @@ def ScrapAndSave(url, xpath, sign, source):
 		analyzer = TextAnalyzer()
 		repository = AnalyzedTextRepository()
 
-		text = scrapper.GetText(url, xpath) 
+		print('Scrapping ' + sign + ' from ' + source)
+		text = scrapper.GetText(url, xpath)
+
+		print('Analyzing ' + sign + ' from ' + source)
 		analyzedText = analyzer.GetAnalyzedTextFromText(text) 
-		repository.SaveAnalyzedText(analyzedText, datetime.now(), sign, source, url)	
+
+		print('Saving ' + sign + ' from ' + source)
+		repository.SaveAnalyzedText(analyzedText, datetime.now(), sign, source, url)
+
 	except Exception as e:
 		print("Unexpected error saving " + url + " error:" + str(e) + '\n')
 		pass
@@ -52,12 +58,17 @@ def Main():
 		for url in source['urls']:
 			for sign in signs.values():
 
-				the_url = url['url'] %sign
-				xpath = url['xpath']
-				the_source = source['name']
-				t = Thread(target=ScrapAndSave, args=(the_url,xpath,sign,the_source,)) 
-				t.start()
-				threads.append(t)
+				try:
+
+					the_url = url['url'] %sign
+					xpath = url['xpath']
+					the_source = source['name']
+					t = Thread(target=ScrapAndSave, args=(the_url,xpath,sign,the_source,)) 
+					t.start()
+					threads.append(t)
+				except Exception as e:
+					print("Unexpected error loading configuration for " + url + " error:" + str(e) + '\n')
+					pass
 
 	# Wait for threads to finish
 	i =0
@@ -70,4 +81,4 @@ def Main():
 
 
 Main()
-print('OK')
+print('Ok')

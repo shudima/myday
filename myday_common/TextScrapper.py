@@ -11,8 +11,6 @@ class TextScrapper:
 		user_agent = {'User-agent': AGENT}
 		response  = requests.get(url, headers = user_agent, timeout=5)
 		tree = html.fromstring(response.text.encode('utf-8'))
-
-
 		textDiv = tree.xpath(xpath)
 
 		text = textDiv[0].text
